@@ -1,8 +1,15 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Main where
+-- scotty.hs
 
---import Lib
-import MyRandom
-import System.Random
+--module Scotty where
+import Web.Scotty
+import Data.Monoid (mconcat)
+import Control.Monad.Trans.Class
 
-main :: IO ()
-main = print $ test 0 g
+main = scotty 3000 $ do
+  get "/:word" $ do
+    beam <- param "word"
+    lift (putStrLn "hello")
+    html $ mconcat ["<h1>Scotty, ", beam, " me up!</h1>"]
